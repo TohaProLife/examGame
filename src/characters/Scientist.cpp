@@ -10,14 +10,16 @@ Scientist::Scientist(std::string _name, int _inventionLevel) : inventionLevel(_i
 void Scientist::live() {
     std::cout << name << " the Scientist is inventing something..." << std::endl;
     inventionLevel++;
-    energy -= 10;
-    if (energy < 0) energy = 0;
+    mood -= 5;
+    if (mood < 0) mood = 0;
 }
 
 std::string Scientist::interact(std::shared_ptr<ICharacter> other) {
     std::string result = name + " shares scientific knowledge with " + other->getName();
+    energy -= 10;
+    if (energy < 0) energy = 0;
     mood += 5;
-    other->setMood(other->getMood() + 3);
+    other->setMood(other->getMood() + inventionLevel);
     return result;
 }
 

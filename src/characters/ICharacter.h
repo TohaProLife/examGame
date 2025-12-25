@@ -19,6 +19,8 @@ public:
     virtual void setEnergy(int value) { energy = value; }
     virtual void setMood(int value) { mood = value; }
 
+    virtual bool shouldLeave() const { return mood <= 0 || energy <= 0; }
+
     virtual ~ICharacter() = default;
 
 protected:

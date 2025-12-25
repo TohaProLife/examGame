@@ -23,15 +23,27 @@ void Village::simulate() {
         std::mt19937 gen(rd());
         std::uniform_int_distribution<> dis(0, characters.size() - 1);
 
-        int idx1 = dis(gen);
-        int idx2 = dis(gen);
+        for (int i = 0; i < 3; i++) {
+            int idx1 = dis(gen);
+            int idx2 = dis(gen);
 
-        while (idx1 == idx2 && characters.size() > 1) {
-            idx2 = dis(gen);
+            while (idx1 == idx2) {
+                idx2 = dis(gen);
+            }
+
+            std::string interaction = characters[idx1]->interact(characters[idx2]);
+            std::cout << ">> " << interaction << std::endl;
         }
+    }
 
-        std::string interaction = characters[idx1]->interact(characters[idx2]);
-        std::cout << ">> " << interaction << std::endl;
+    auto it = characters.begin();
+    while (it != characters.end()) {
+        if ((*it)->shouldLeave()) {
+            std::cout << "!! " << (*it)->getName() << " left the village (mood reached 0)" << std::endl;
+            it = characters.erase(it);
+        } else {
+            ++it;
+        }
     }
 
     displayStats();

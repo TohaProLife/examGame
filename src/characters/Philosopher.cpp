@@ -10,16 +10,16 @@ Philosopher::Philosopher(std::string _name, int _wisdom) : wisdom(_wisdom) {
 void Philosopher::live() {
     std::cout << name << " the Philosopher is contemplating life..." << std::endl;
     wisdom++;
-    energy -= 5;
-    mood += 2;
-    if (energy < 0) energy = 0;
-    if (mood > 100) mood = 100;
+    mood -= 5;
+    if (mood < 0) mood = 0;
 }
 
 std::string Philosopher::interact(std::shared_ptr<ICharacter> other) {
     std::string result = name + " gives wise advice to " + other->getName();
+    energy -= 10;
+    if (energy < 0) energy = 0;
     mood += 3;
-    other->setMood(other->getMood() + 10);
+    other->setMood(other->getMood() + wisdom);
     return result;
 }
 

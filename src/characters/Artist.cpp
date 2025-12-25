@@ -10,16 +10,16 @@ Artist::Artist(std::string _name, int _artworks) : artworks(_artworks) {
 void Artist::live() {
     std::cout << name << " the Artist is creating a masterpiece..." << std::endl;
     artworks++;
-    energy -= 8;
-    mood += 5;
-    if (energy < 0) energy = 0;
-    if (mood > 100) mood = 100;
+    mood -= 5;
+    if (mood < 0) mood = 0;
 }
 
 std::string Artist::interact(std::shared_ptr<ICharacter> other) {
     std::string result = name + " shows their art to " + other->getName();
+    energy -= 10;
+    if (energy < 0) energy = 0;
     mood += 10;
-    other->setMood(other->getMood() + 8);
+    other->setMood(other->getMood() + artworks);
     return result;
 }
 
