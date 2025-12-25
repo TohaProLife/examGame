@@ -3,54 +3,76 @@
 #include "characters/Artist.h"
 #include "characters/Athlete.h"
 #include "characters/Philosopher.h"
+#include "characters/Fashionista.h"
+#include "characters/Farmer.h"
 #include "Village.h"
 
 #include <memory>
 #include <iostream>
-#include <random>
+#include <vector>
+#include <string>
+#include <cstdlib>
+#include <ctime>
 
 int main() {
     std::unique_ptr<Village> village(new Village());
 
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::uniform_int_distribution<> moodDist(20, 100);
+    srand(time(0));
 
-    std::shared_ptr<ICharacter> pin = std::make_shared<Scientist>("Pin", 10);
-    pin->setMood(moodDist(gen));
+    std::vector<std::shared_ptr<ICharacter>> allCharacters;
+    allCharacters.push_back(std::make_shared<Scientist>("Pin", rand() % 20 + 1));
+    allCharacters.push_back(std::make_shared<Scientist>("Losyash", rand() % 20 + 1));
+    allCharacters.push_back(std::make_shared<Artist>("Barash", rand() % 10 + 1));
+    allCharacters.push_back(std::make_shared<Athlete>("Sovunya", rand() % 50 + 30));
+    allCharacters.push_back(std::make_shared<Athlete>("Krosh", rand() % 50 + 30));
+    allCharacters.push_back(std::make_shared<Athlete>("Ezhik", rand() % 50 + 30));
+    allCharacters.push_back(std::make_shared<Fashionista>("Nyusha", rand() % 25 + 10));
+    allCharacters.push_back(std::make_shared<Farmer>("Kopatych", rand() % 30 + 15));
+    allCharacters.push_back(std::make_shared<Philosopher>("Kar-Karych", rand() % 30 + 5));
 
-    std::shared_ptr<ICharacter> losyash = std::make_shared<Scientist>("Losyash", 15);
-    losyash->setMood(moodDist(gen));
+    std::cout << "=== Village Simulator ===" << std::endl;
+    std::cout << "\nAvailable characters:" << std::endl;
+    std::cout << "1. Pin (Scientist, invention level: "
+              << std::static_pointer_cast<Scientist>(allCharacters[0])->getInventionLevel() << ")" << std::endl;
+    std::cout << "2. Losyash (Scientist, invention level: "
+              << std::static_pointer_cast<Scientist>(allCharacters[1])->getInventionLevel() << ")" << std::endl;
+    std::cout << "3. Barash (Artist, artworks: "
+              << std::static_pointer_cast<Artist>(allCharacters[2])->getArtworks() << ")" << std::endl;
+    std::cout << "4. Sovunya (Athlete, fitness: "
+              << std::static_pointer_cast<Athlete>(allCharacters[3])->getFitness() << ")" << std::endl;
+    std::cout << "5. Krosh (Athlete, fitness: "
+              << std::static_pointer_cast<Athlete>(allCharacters[4])->getFitness() << ")" << std::endl;
+    std::cout << "6. Ezhik (Athlete, fitness: "
+              << std::static_pointer_cast<Athlete>(allCharacters[5])->getFitness() << ")" << std::endl;
+    std::cout << "7. Nyusha (Fashionista, style: "
+              << std::static_pointer_cast<Fashionista>(allCharacters[6])->getStyle() << ")" << std::endl;
+    std::cout << "8. Kopatych (Farmer, gardening: "
+              << std::static_pointer_cast<Farmer>(allCharacters[7])->getGardening() << ")" << std::endl;
+    std::cout << "9. Kar-Karych (Philosopher, wisdom: "
+              << std::static_pointer_cast<Philosopher>(allCharacters[8])->getWisdom() << ")" << std::endl;
 
-    std::shared_ptr<ICharacter> barash = std::make_shared<Artist>("Barash", 5);
-    barash->setMood(moodDist(gen));
+    std::cout << "\nEnter character numbers to add (separated by space, press Enter to finish):" << std::endl;
 
-    std::shared_ptr<ICharacter> sovunya = std::make_shared<Athlete>("Sovunya", 40);
-    sovunya->setMood(moodDist(gen));
+    std::string line;
+    std::getline(std::cin, line);
 
-    std::shared_ptr<ICharacter> krosh = std::make_shared<Athlete>("Krosh", 60);
-    krosh->setMood(moodDist(gen));
+    int choice;
+    int pos = 0;
+    while (pos < line.length()) {
+        if (line[pos] >= '1' && line[pos] <= '9') {
+            choice = line[pos] - '0';
+            allCharacters[choice - 1]->setMood(rand() % 80 + 20);
+            village->addCharacter(allCharacters[choice - 1]);
+        }
+        pos++;
+    }
 
-    std::shared_ptr<ICharacter> ezhik = std::make_shared<Athlete>("Ezhik", 55);
-    ezhik->setMood(moodDist(gen));
+    int days;
+    std::cout << "\nEnter number of days to simulate: ";
+    std::cin >> days;
 
-    std::shared_ptr<ICharacter> nyusha = std::make_shared<Philosopher>("Nyusha", 8);
-    nyusha->setMood(moodDist(gen));
-
-    std::shared_ptr<ICharacter> kopatych = std::make_shared<Philosopher>("Kopatych", 35);
-    kopatych->setMood(moodDist(gen));
-
-    village->addCharacter(pin);
-    village->addCharacter(losyash);
-    village->addCharacter(barash);
-    village->addCharacter(nyusha);
-    village->addCharacter(krosh);
-    village->addCharacter(ezhik);
-    village->addCharacter(sovunya);
-    village->addCharacter(kopatych);
-
-    std::cout << "\nStarting simulation..." << std::endl;
-    for (int i = 0; i < 3; i++) {
+    std::cout << "\nStarting simulation for " << days << " days..." << std::endl;
+    for (int i = 0; i < days; i++) {
         village->simulate();
     }
 

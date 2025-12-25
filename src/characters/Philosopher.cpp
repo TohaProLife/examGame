@@ -32,5 +32,5 @@ int Philosopher::getWisdom() const {
 }
 
 Philosopher::~Philosopher() {
-    std::cout << "Philosopher " << name << " is leaving the village" << std::endl;
+    std::cout << "Philosopher " << name << " left the village" << std::endl;
 }

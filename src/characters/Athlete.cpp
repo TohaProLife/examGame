@@ -32,5 +32,5 @@ int Athlete::getFitness() const {
 }
 
 Athlete::~Athlete() {
-    std::cout << "Athlete " << name << " is leaving the village" << std::endl;
+    std::cout << "Athlete " << name << " left the village" << std::endl;
 }

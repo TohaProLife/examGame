@@ -32,5 +32,5 @@ int Scientist::getInventionLevel() const {
 }
 
 Scientist::~Scientist() {
-    std::cout << "Scientist " << name << " is leaving the village" << std::endl;
+    std::cout << "Scientist " << name << " left the village" << std::endl;
 }

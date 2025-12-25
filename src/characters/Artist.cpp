@@ -32,5 +32,5 @@ int Artist::getArtworks() const {
 }
 
 Artist::~Artist() {
-    std::cout << "Artist " << name << " is leaving the village" << std::endl;
+    std::cout << "Artist " << name << " left the village" << std::endl;
 }
