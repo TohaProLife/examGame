@@ -31,8 +31,14 @@ void Village::simulate() {
                 idx2 = dis(gen);
             }
 
-            std::string interaction = characters[idx1]->interact(characters[idx2]);
-            std::cout << ">> " << interaction << std::endl;
+            if (characters[idx1]->getType() == characters[idx2]->getType()) {
+                std::string interaction = characters[idx1]->interact(characters[idx2], 10);
+                std::cout << ">> " << interaction << std::endl;
+            }
+            else {
+                std::string interaction = characters[idx1]->interact(characters[idx2]);
+                std::cout << ">> " << interaction << std::endl;
+            }
         }
     }
 

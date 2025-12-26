@@ -10,6 +10,13 @@ public:
 
     virtual void live() = 0;
     virtual std::string interact(std::shared_ptr<ICharacter> other) = 0;
+    virtual std::string interact(std::shared_ptr<ICharacter> other, int helpAmount) {
+        std::string result = name + " helps " + other->getName();
+        energy -= helpAmount;
+        other->setEnergy(other->getEnergy() + helpAmount);
+        return result;
+    }
+
     virtual std::string getType() const = 0;
 
     virtual int getEnergy() const { return energy; }
